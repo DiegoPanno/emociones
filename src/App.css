@@ -1,0 +1,28 @@
+body {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: black;
+}
+
+canvas {
+ 
+  position: absolute;
+ 
+  
+}
+
+#emoticons {
+  
+  
+font-size: 200px;
+margin-left: 13%;
+  
+}
+
+.emoticon {
+  margin-left: 30%;
+  margin-top: 8px;
+}
