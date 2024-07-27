@@ -8,21 +8,25 @@ body {
 }
 
 canvas {
- 
   position: absolute;
- 
-  
 }
 
 #emoticons {
-  
-  
-font-size: 200px;
-margin-left: 13%;
-  
+  font-size: 100px;
+  align-items: center;
+  justify-content: center;
 }
 
 .emoticon {
-  margin-left: 30%;
+  margin-left: 8%;
   margin-top: 8px;
+  text-align: center;
+}
+
+.age {
+  font-size: 24px;
+  color: white;
+  display: block;
+  margin-top: 8px;
+  font-family: Arial, Helvetica, sans-serif;
 }

@@ -62,10 +62,11 @@ const FaceDetection = () => {
           const emotions = detections[0].expressions;
           const maxEmotion = Object.keys(emotions).reduce((a, b) => emotions[a] > emotions[b] ? a : b);
           const emoticon = emotionEmoticons[maxEmotion];
+          const age = Math.round(detections[0].age);
 
           const emoticonElement = document.createElement('div');
           emoticonElement.className = 'emoticon';
-          emoticonElement.textContent = emoticon;
+          emoticonElement.innerHTML = `${emoticon}<br><span class="age">Edad aprox: ${age} </span>`;
           emoticonsDivRef.current.appendChild(emoticonElement);
         }
 
@@ -77,10 +78,11 @@ const FaceDetection = () => {
 
   return (
     <div>
-      <video ref={videoRef} autoPlay muted width="auto" height="auto" />
+      <video ref={videoRef} autoPlay muted width="320" height="400" />
       <div ref={emoticonsDivRef} id="emoticons"></div>
     </div>
   );
 };
 
 export default FaceDetection;
+
