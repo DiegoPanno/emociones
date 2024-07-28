@@ -19,20 +19,19 @@ const FaceDetection = () => {
   useEffect(() => {
     const loadModels = async () => {
       await Promise.all([
-        faceapi.nets.ssdMobilenetv1.loadFromUri('/models'), 
+        faceapi.nets.tinyFaceDetector.loadFromUri('/models'),
         faceapi.nets.ageGenderNet.loadFromUri('/models'),
         faceapi.nets.faceExpressionNet.loadFromUri('/models'),
         faceapi.nets.faceLandmark68Net.loadFromUri('/models'),
         faceapi.nets.faceLandmark68TinyNet.loadFromUri('/models'),
-        faceapi.nets.faceRecognitionNet.loadFromUri('/models'),
-        faceapi.nets.tinyFaceDetector.loadFromUri('/models')
+        faceapi.nets.faceRecognitionNet.loadFromUri('/models')
       ]);
       startVideo();
     };
 
     const startVideo = () => {
       navigator.getUserMedia(
-        { video: {} },
+        { video: { width: { ideal: 320 }, height: { ideal: 240 } } },
         stream => {
           videoRef.current.srcObject = stream;
         },
@@ -51,7 +50,7 @@ const FaceDetection = () => {
       faceapi.matchDimensions(canvas, displaySize);
 
       setInterval(async () => {
-        const detections = await faceapi.detectAllFaces(videoRef.current)
+        const detections = await faceapi.detectAllFaces(videoRef.current, new faceapi.TinyFaceDetectorOptions())
           .withFaceLandmarks()
           .withFaceExpressions()
           .withAgeAndGender();
@@ -66,19 +65,19 @@ const FaceDetection = () => {
 
           const emoticonElement = document.createElement('div');
           emoticonElement.className = 'emoticon';
-          emoticonElement.innerHTML = `${emoticon}<br><span class="age">Edad aprox: ${age} </span>`;
+          emoticonElement.innerHTML = `${emoticon}<br><span class="age">Edad aprox: ${age}</span>`;
           emoticonsDivRef.current.appendChild(emoticonElement);
         }
 
         const resizedDetections = faceapi.resizeResults(detections, displaySize);
         canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
-      }, 100);
+      }, 200); // Aumentar a 200 ms para mejor rendimiento
     });
   }, []);
 
   return (
     <div>
-      <video ref={videoRef} autoPlay muted width="320" height="400" />
+      <video ref={videoRef} autoPlay muted width="320" height="300" />
       <div ref={emoticonsDivRef} id="emoticons"></div>
     </div>
   );
